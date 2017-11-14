@@ -35,6 +35,12 @@ return 0;
 //akses file
 static int xmp_access(const char *path, int mask){
 int res;
+
+FILE *racloud = fopen("/home/azkianisa/Documents/*.pdf","r");
+while(racloud){
+	printf("Terjadi kesalahan! File berisi konten berbahaya.\n";
+	xmp_rename();
+
 res = access(path,mask);
 if(res == -1) return -errno;
 return 0;
@@ -62,6 +68,7 @@ return 0;
 //open file
 static int xmp_open(const char *path, struct fuse_file_info *fi){
 int res;
+
 
 res = open(dpath, fi->flags);
 if(res == -1) return -errno;
