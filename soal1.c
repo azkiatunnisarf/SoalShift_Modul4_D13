@@ -22,14 +22,15 @@
 static const char *dirnyaa = "/home/azkianisa/Documents";
 
 //get atribut file
-static int xmp_getattr(const char *path, struct stat *stbuf){
-int res;
-char dpath[200];
+static int xmp_getattr(const char *path, struct stat *stbuf)
+{
+	int res;
 
-sprintf(dpath,"%s%s",dirnyaa,path);
-res = lstat(dpath,stbuf);
-if(res == 1) return -errno;
-return 0;
+	res = lstat(path, stbuf);
+	if (res == -1)
+		return -errno;
+
+	return 0;
 }
 
 //akses file
@@ -81,17 +82,10 @@ return 0;
 
 //read file(read doang)
 static int xmp_read(const char *path, char *buf, size_t size, off_t offset, struct fuse_file_info *fi){
-int fd, res;
 
-
-(void) fi;
-fd = open(path, O_RDONLY);
-if(fd == -1) return -errno;
-res = pread(fd, buf, size, offset);
-if(res == -1) res = -errno;
-
-close(fd);
-return res;
+	if(strcmp(".txt")==0 ||  strcmp(".pdf")==0 || strcmp(".doc")==0){
+	system("zenity --error --text='terjadi kesalahan! file berisi konten berbahaya.'");
+	} 
 }
 
 //write file
