@@ -15,6 +15,7 @@
 #include<dirent.h>
 #include<errno.h>
 #include<sys/time.h>
+#include<sys/wait.h>
 #ifdef HAVE_SETXATTR
 #include<sys/xattr.h>
 #endif
@@ -75,23 +76,22 @@ if(res == -1) return -errno;
 return 0;
 }
 
-//rename file
-static int xmp_rename(const char *from, const char *to){
-int res;
-char ffrom[200];
-sprintf(ffrom,"%s%s",dirnyaa,from);
-char fto[200];
-sprintf(fto,"%s%s",dirnyaa,to);
-res = rename(ffrom,fto);
-
-if(res == -1) return -errno;
-return 0;
-}
-
-//open file
+//open file, mkdir simpanan pas ngebuka
 static int xmp_open(const char *path, struct fuse_file_info *fi){
 int res;
-
+char dpath[200];
+sprintf(dpath,"%s%s",dirnyaa,path);
+time_t old;
+time_t new;
+stat("/home/azkianisa/Downloads/*.txt",&check);
+old=check.st_mtime;
+int status;
+while(1){
+	stat("/home/azkianisa/Downlads/*.txt",&check);
+	new=check.st_mtime;
+	if(old!=new) xmp_mkdir(); //mkdir simpanan
+	else{while(wait(&status)>0);}
+	}
 res = open(dpath, fi->flags);
 if(res == -1) return -errno;
 close(res);
