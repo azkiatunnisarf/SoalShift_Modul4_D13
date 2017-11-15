@@ -36,11 +36,10 @@ return 0;
 static int xmp_access(const char *path, int mask){
 int res;
 
-FILE *racloud = fopen("/home/azkianisa/Documents/*.pdf","r");
-while(racloud){
+while(FILE *racloud = fopen("/home/azkianisa/Documents/*.pdf","r")){
 	printf("Terjadi kesalahan! File berisi konten berbahaya.\n";
 	xmp_rename();
-
+	}
 res = access(path,mask);
 if(res == -1) return -errno;
 return 0;
