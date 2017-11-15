@@ -58,8 +58,12 @@ return 0;
 //rename file
 static int xmp_rename(const char *from, const char *to){
 int res;
+char ffrom[200];
+sprintf(ffrom,"%s%s",dirnyaa,from);
+char fto[200];
+sprintf(fto,"%s%s",dirnyaa,to);
+res = rename(ffrom,fto);
 
-res = rename(from,to);
 if(res == -1) return -errno;
 return 0;
 }
